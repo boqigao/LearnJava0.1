@@ -2,6 +2,8 @@ package cn.boqi.game;
 
 import javax.swing.JFrame;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -11,17 +13,15 @@ import java.awt.event.WindowEvent;
  */
 public class MyGameFrame extends JFrame {
 
-    Image plane = GameUtil.getImage("images/plane.png");
+    Image planeImg = GameUtil.getImage("images/plane.png");
     Image bg = GameUtil.getImage("images/bg.png");
-
-    int planeX = 250;
-    int planeY = 250;
+    Plane plane = new Plane(planeImg, 250, 250);
+    //重要，在类最外面只能定义元素，不能使用函数
 
     @Override
     public void paint(Graphics g){
         g.drawImage(bg,0,0,null);
-        g.drawImage(plane, planeX, planeY,null);
-        planeX++;
+        plane.drawSelf(g);
     }
 
     //帮助我们反复的重画窗口！
@@ -55,11 +55,31 @@ public class MyGameFrame extends JFrame {
         });
 
         new PaintThread().start();  //启动重画窗口的线程
+        addKeyListener(new KeyMonitor()); //给窗口增加键盘的监听
     }
+
+    /**
+     * 定义键盘监听的内部类
+     */
+    class KeyMonitor extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            System.out.println(e.getKeyCode());
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            System.out.println(e.getKeyCode());
+        }
+    }
+
 
     public static void main(String[] args) {
         MyGameFrame f = new MyGameFrame();
         f.launchFrame();
     }
+
+
+
 
 }
