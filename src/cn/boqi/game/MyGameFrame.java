@@ -14,14 +14,14 @@ public class MyGameFrame extends JFrame {
     Image plane = GameUtil.getImage("images/plane.png");
     Image bg = GameUtil.getImage("images/bg.png");
 
-    int x = 250;
-    int y = 250;
+    int planeX = 250;
+    int planeY = 250;
 
     @Override
     public void paint(Graphics g){
         g.drawImage(bg,0,0,null);
-        g.drawImage(plane, x, y,null);
-        x++;
+        g.drawImage(plane, planeX, planeY,null);
+        planeX++;
     }
 
     //帮助我们反复的重画窗口！
