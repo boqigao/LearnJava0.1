@@ -30,6 +30,14 @@ public class Shell extends GameObject {
         //炮弹沿着任意角度飞
         x += speed * Math.cos(degree);
         y += speed * Math.sin(degree);
+
+        if(x<0||x>Constant.GAME_WIDTH - 2*width){
+            degree = Math.PI - degree;
+        }
+
+        if(y<30||y>Constant.GAME_HEIGHT - height){
+            degree = -degree;
+        }
         g.setColor(c);
     }
 }
