@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 /**
  * 飞机游戏的主窗口
@@ -22,6 +23,9 @@ public class MyGameFrame extends Frame {
     Plane plane = new Plane(planeImg, 250, 250);
     Shell[] shells = new Shell[50];
     Explode bao;
+    Date startTime = new Date();
+    Date endTime;
+    int period;
     //重要，在类最外面只能定义元素，不能使用函数
 
     @Override
@@ -35,13 +39,20 @@ public class MyGameFrame extends Frame {
             boolean peng = shells[i].getRect().intersects(plane.getRect());
 
             if (peng){
-
                 plane.live = false;
-
                 if(bao == null){
                 bao  = new Explode(plane.x, plane.y);}
+                endTime = new Date();
+                period = (int)((endTime.getTime()-startTime.getTime())/1000);
                 bao.draw(g);
             }
+
+        }
+        if(!plane.live){
+            Font f = new Font("宋体", Font.BOLD, 50);
+            g.setFont(f);
+            g.setColor(Color.WHITE);
+            g.drawString("时间"+period+"秒",(int)plane.x, (int)plane.y);
         }
     }
 
@@ -116,8 +127,4 @@ public class MyGameFrame extends Frame {
         MyGameFrame f = new MyGameFrame();
         f.launchFrame();
     }
-
-
-
-
 }
